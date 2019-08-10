@@ -71,7 +71,8 @@ const DisplayEventList = ({title, eventList}) => {
   );
 }
 
-const DisplayEvents = ({title, userEvents}) =>  {
+const DisplayEvents = ({title, userEvents, setIsLoading}) =>  {
+  setIsLoading(false);
   return (
     <>
       <h1>{title}</h1>

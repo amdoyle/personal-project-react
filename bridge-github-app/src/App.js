@@ -20,15 +20,16 @@ const App = () => {
     // And a gitHub Username was been provided
     // And that user exists and has events
     // Clear the error message
-    if(errorMessage && gitHubUsername && Object.keys(userEvents).length) {
-      setErrorMessage('');
-    }
+      if(errorMessage && gitHubUsername && Object.keys(userEvents).length !== 0) {
+        setErrorMessage('');
+      }
   })
 
   return(
       <div className="App">
         {errorMessage ? <ErrorComponent errorMessage={errorMessage} setIsLoading=
           {setIsLoading} /> : null}
+
         {Object.keys(userEvents).length ?
           <DisplayEvents title={gitHubUsername} userEvents={userEvents} setIsLoading=
           {setIsLoading}/>

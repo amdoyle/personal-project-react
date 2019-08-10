@@ -32,6 +32,8 @@ const SearchInputForm = ({setGitHubUsername, setUserEvents, dataFilters, setErro
       // check that there is data before continuing
       if(!data) return;
       const transformedData = transformUserEventData(data, dataFilters);
+      // check that user has the events are looking for
+      if(Object.keys(transformedData).length === 0) setErrorMessage(`${inputValue} does not have any events.`);
       return setUserEvents(transformedData);
     });
   }

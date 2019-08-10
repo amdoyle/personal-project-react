@@ -9,7 +9,7 @@ const App = () => {
 
   const [gitHubUsername, setGitHubUsername] = useState('');
   const [userEvents, setUserEvents] = useState({});
-  const [dataFilters, setDataFilters] = useState(['ForkEvent', 'PullRequestEvent']);
+  const [dataFilters] = useState(['ForkEvent', 'PullRequestEvent']);
 
   useEffect (()=>{
   })

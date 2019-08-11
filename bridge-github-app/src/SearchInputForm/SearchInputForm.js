@@ -39,12 +39,12 @@ const SearchInputForm = ({setGitHubUsername, setUserEvents, dataFilters, setErro
   }
 
   return (
-    <form action="get" method="get" onSubmit={submitEvent}>
+    <form onSubmit={submitEvent} data-testid="get-github-user" >
       <label>GitHub Username:
         <input type="search" id="get-github-user-data"
         aria-label="Input GitHub Username to Retrieve Data" placeholder="Type something..."/>
       </label>
-      <button>Get User</button>
+      <input type="submit" value="Get User" />
     </form>
   );
 };

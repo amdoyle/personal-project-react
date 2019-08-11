@@ -1,20 +1,7 @@
 import React from 'react';
+const SearchInputForm = ({setErrorMessage, getGitHubUserEvents, setIsLoading, setGitHubUserName, setUserEvents, dataFilters}) => {
 
-const SearchInputForm = ({setGitHubUsername, setUserEvents, dataFilters, setErrorMessage, setIsLoading}) => {
-  const getGitHubUserEvents = (username) => fetch(`https://api.github.com/users/${username}/events`)
-                                        .then(response =>  {
-
-                                          if(response.status === 200) {
-                                            return response.json();
-                                          }
-
-                                          if(response.status === 404) {
-                                            throw new Error(`User ${username} not found. Check your input and try again.`);
-                                          }
-                                        })
-                                        .catch(error => setErrorMessage(error.message));
-
-  const transformUserEventData = (data, dataFilters) => {
+  const transformUserEventData = (dataFilters, data = []) => {
     return data.filter((event) => dataFilters.includes(event.type) ? event : null)
                 .reduce((startValue, item) => {
                   startValue[`${item.type}`] = startValue[`${item.type}`] ? [...startValue[`${item.type}`], item] : [item];
@@ -27,15 +14,25 @@ const SearchInputForm = ({setGitHubUsername, setUserEvents, dataFilters, setErro
     event.preventDefault();
     setIsLoading(true);
     const inputValue = event.currentTarget.querySelector('input[type=search]').value;
-    setGitHubUsername(inputValue);
-    getGitHubUserEvents(inputValue).then(data => {
+    setGitHubUserName(inputValue);
+    getGitHubUserEvents(inputValue).then((response) => {
+      if(response.status === 200) {
+        return response.json();
+      }
+
+      if(response.status === 404) {
+        throw new Error(`User ${inputValue} not found. Check your input and try again.`);
+      }
+    })
+    .then(data => {
       // check that there is data before continuing
       if(!data) return;
-      const transformedData = transformUserEventData(data, dataFilters);
+      const transformedData = transformUserEventData(dataFilters, data);
       // check that user has the events are looking for
       if(Object.keys(transformedData).length === 0) setErrorMessage(`${inputValue} does not have any events.`);
       return setUserEvents(transformedData);
-    });
+    })
+    .catch(error => setErrorMessage(error.message));;
   }
 
   return (

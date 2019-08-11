@@ -48,7 +48,7 @@ const ListEventItem = ({eventInfo}) => {
   )
 };
 
-const DisplayEventList = ({title, eventList}) => {
+const DisplayEventList = ({title, eventList }) => {
   return(
     <>
     <h2>{title}</h2>
@@ -71,11 +71,14 @@ const DisplayEventList = ({title, eventList}) => {
   );
 }
 
-const DisplayEvents = ({title, userEvents, setIsLoading}) =>  {
+const DisplayEvents = ({gitHubUserName, userEvents, setIsLoading, errorMessage, setErrorMessage}) =>  {
+  if(errorMessage && gitHubUserName && userEvents) {
+    setErrorMessage('');
+  }
   setIsLoading(false);
   return (
     <>
-      <h1>{title}</h1>
+      <h1>{gitHubUserName}</h1>
       {Object.keys(userEvents).map((eventType) => <DisplayEventList  title={eventType} eventList={userEvents[eventType]}/>)}
     </>
   )

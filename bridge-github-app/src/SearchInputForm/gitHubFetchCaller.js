@@ -10,23 +10,21 @@ const transformUserEventData = (dataFilters, data = []) => {
 };
 
 const getGitHubUserEvents = (username, dataFilters) => {
-  return gitHubUserAPI(username).then(response =>  response)
+  return gitHubUserAPI(username)
     .then((response) => {
       if(response.status === 200) {
         return response.json();
       }
 
       if(response.status === 404) {
-        debugger;
         throw new Error(`User ${username} not found. Check your input and try again.`);
       }
     })
   .then(data => {
     // check that there is data before continuing
-    debugger;
     if(!data) throw new Error(`${username} does not have any events.`);
     return  transformUserEventData(dataFilters, data);
   })
 };
 
-export { getGitHubUserEvents }
+export { getGitHubUserEvents,  transformUserEventData}

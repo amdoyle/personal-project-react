@@ -10,7 +10,7 @@ const GenerateLink = (linkData) => {
 
 const ListForkedEvent = ({eventInfo}) => {
   return (
-    <li >
+    <li className="fork-event-list-item" >
       <span>
       {GenerateLink(eventInfo.payload.forkee)}
       </span>
@@ -25,7 +25,7 @@ const ListForkedEvent = ({eventInfo}) => {
 
 const ListPullRequestEvent = ({eventInfo}) => {
   return (
-    <li >
+    <li lassName="pull-request-event-list-item" >
       <span>
         {GenerateLink(eventInfo.repo)}
       </span>
@@ -40,7 +40,7 @@ const ListPullRequestEvent = ({eventInfo}) => {
 
 const ListEventItem = ({eventInfo}) => {
   return (
-    <li >
+    <li lassName="event-list-item" >
       <span>
         {GenerateLink(eventInfo.repo)}
       </span>
@@ -51,8 +51,8 @@ const ListEventItem = ({eventInfo}) => {
 const DisplayEventList = ({title, eventList }) => {
   return(
     <>
-    <h2>{title}</h2>
-    <ul>
+    <h2 className={`evnet-type-${title}`}>{title}</h2>
+    <ul className={`event-list-${title}`}>
       { eventList.map(eventInfo => {
           if(eventInfo.type === 'ForkEvent') {
            return <ListForkedEvent key={eventInfo.id.toString()}
@@ -78,7 +78,7 @@ const DisplayEvents = ({gitHubUserName, userEvents, setIsLoading, errorMessage, 
   setIsLoading(false);
   return (
     <>
-      <h1>{gitHubUserName}</h1>
+      <h1 className="username">{gitHubUserName}</h1>
       {Object.keys(userEvents).map((eventType) => <DisplayEventList  title={eventType} eventList={userEvents[eventType]}/>)}
     </>
   )

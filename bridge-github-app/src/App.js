@@ -9,12 +9,9 @@ import { LoadingComponent } from './LoadingComponent/LoadingComponent';
 import {
   setGitHubUserName,
   setUserEvents,
-  setDataFilters,
   setErrorMessage,
   setIsLoading } from "./store/gitHubUserEvents.actions";
-  const gitHubUserAPI = (username) => fetch(`https://api.github.com/users/${username}/events`);
 
-   const getGitHubUserEvents = (username) => gitHubUserAPI(username).then(response =>  response);
 class App extends React.Component {
 
   render () {
@@ -26,7 +23,7 @@ class App extends React.Component {
             {Object.keys(userEvents).length ?
               <DisplayEvents gitHubUserName={gitHubUserName} errorMessage={errorMessage} userEvents={userEvents} setErrorMessage={this.props.setErrorMessage} setIsLoading={this.props.setIsLoading}/>
             :
-              <SearchInputForm getGitHubUserEvents={getGitHubUserEvents} setErrorMessage={this.props.setErrorMessage} setUserEvents={this.props.setUserEvents} dataFilters={this.props.dataFilters}  setGitHubUserName={this.props.setGitHubUserName} setIsLoading={this.props.setIsLoading}/>
+              <SearchInputForm setErrorMessage={this.props.setErrorMessage} setUserEvents={this.props.setUserEvents} dataFilters={this.props.dataFilters}  setGitHubUserName={this.props.setGitHubUserName} setIsLoading={this.props.setIsLoading}/>
             }
 
             {isLoading ? <LoadingComponent /> : ''}
@@ -46,7 +43,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps =  {
   setGitHubUserName,
   setUserEvents,
-  setDataFilters,
   setErrorMessage,
   setIsLoading
 }
